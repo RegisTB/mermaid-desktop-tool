@@ -36,6 +36,21 @@ cd mermaid-desktop-tool
 
 # Build and run in production mode
 docker build -t mermaid-yang-app -f docker/Dockerfile .
+Please note if you get the following errors:
+ => => transferring dockerfile: 1.34kB                                                                                                                                   0.0s
+ => CANCELED [internal] load metadata for docker.io/library/node:18-alpine                                                                                               0.1s
+ => ERROR [internal] load metadata for docker.io/library/base:latest  
+
+ The Docker image is trying to run on a platform (e.g., ARM64) that your system (likely x86_64) doesn't support natively.
+✅ Fix: Remove or Override the --platform=linux/arm64 Flag
+The Dockerfile in the repo uses:
+
+# In the Dockerfile, update the line below:
+FROM --platform=linux/arm64 node:18-alpine
+with  FROM node:18-alpine
+do the same thing under # Production image section
+# Please leave everything else as is and proceed with the command below
+
 docker run -p 3000:3000 -v $(pwd)/uploads:/app/uploads mermaid-yang-app
 ```
 
